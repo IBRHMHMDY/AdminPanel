@@ -16,22 +16,22 @@ class RestaurantsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                ImageColumn::make('image')->label('')
+                    ->rounded(),
+                TextColumn::make('name')->label('اسم المطعم')->searchable(),
+                TextColumn::make('phone')->label('رقم الهاتف')
                     ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                ImageColumn::make('image'),
-                TextColumn::make('open_at')
+                TextColumn::make('open_at')->label('وقت الفتح')
                     ->time()
                     ->sortable(),
-                TextColumn::make('close_at')
+                TextColumn::make('close_at')->label('وقت الإغلاق')
                     ->time()
                     ->sortable(),
-                TextColumn::make('created_at')
+                TextColumn::make('created_at')->label('تاريخ الإنشاء')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                TextColumn::make('updated_at')->label('تاريخ التحديث')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

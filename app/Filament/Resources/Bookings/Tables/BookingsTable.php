@@ -16,29 +16,28 @@ class BookingsTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('المستخدم')
+                    ->label('اسم العميل')
                     ->placeholder('-'),
                 TextColumn::make('restaurant.name')
                     ->label('المطعم')
                     ->placeholder('-'),
-                TextColumn::make('table_type.name')
+                TextColumn::make('tableType.name')
                     ->label('نوع الطاولة')
                     ->placeholder('-'),
-                TextColumn::make('booking_date')
+                TextColumn::make('booking_date')->label('تاريخ الحجز')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('guests_count')
+                TextColumn::make('guests_count')->label('عدد الضيوف')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('status')
+                TextColumn::make('status')->label('الحالة')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'gray',
                         'confirmed' => 'success',
                         'cancelled' => 'danger',
                         'completed' => 'info',
-                    })
-                    ->label('الحالة'),
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -49,16 +48,16 @@ class BookingsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                    //
+                //
             ])
             ->recordActions([
-                    ViewAction::make(),
-                    EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
-                    BulkActionGroup::make([
-                        DeleteBulkAction::make(),
-                    ]),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 }
