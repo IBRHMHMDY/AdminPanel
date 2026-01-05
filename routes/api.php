@@ -17,8 +17,7 @@ Route::middleware(['auth:sanctum', 'is_user'])->group(function () {
     Route::get('/my-bookings', [BookingController::class, 'myBookings']); // عرض جميع حجوزات المستخدم
     // Route::get('/my-bookings/{id}', [BookingController::class, 'show']); // عرض تفاصيل حجز معين
     Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']); // إلغاء حجز محدد
-    // تسجيل خروج المستخدم
-    // Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']); // تسجيل خروج المستخدم
 });
 // روابط محمية للمسؤول (تحتاج توكن Token وصلاحيات مسؤول)
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
@@ -26,5 +25,5 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::get('/admin/my-bookings', [BookingController::class, 'myBookings']); // عرض جميع حجوزات المستخدم
     // Route::get('/admin/my-bookings/{id}', [BookingController::class, 'show']); // عرض تفاصيل حجز معين
     Route::post('/admin/bookings/{id}/cancel', [BookingController::class, 'cancel']); // إلغاء حجز محدد
-    // Route::post('/logout', [AuthController::class, 'logout']); // تسجيل خروج المستخدم
+    Route::post('/logout', [AuthController::class, 'logout']); // تسجيل خروج المستخدم
 });
