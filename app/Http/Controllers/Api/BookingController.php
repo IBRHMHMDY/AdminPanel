@@ -54,9 +54,23 @@ class BookingController extends Controller
 
     public function myBookings()
     {
-        // جلب حجوزات المستخدم المسجل حالياً
-        return response()->json(
-            Booking::with('restaurant')->where('user_id', auth()->id())->get()
-        );
+        // جلب الحجوزات مع بيانات المطعم ونوع الطاولة
+        return Booking::with(['restaurant', 'tableType'])
+            ->where('user_id', auth()->id())
+            ->orderBy('booking_date', 'desc')
+            ->get();
+    }
+
+    public function cancel($id)
+    {
+        $booking = Booking::where('user_id', auth()->id())->findOrFail($id);
+
+        if ($booking->status == 'pending') {
+            $booking->update(['status' => 'cancelled']);
+
+            return response()->json(['message' => 'تم إلغاء الحجز بنجاح']);
+        }
+
+        return response()->json(['message' => 'لا يمكن إلغاء حجز مؤكد أو ملغى بالفعل'], 400);
     }
 }
