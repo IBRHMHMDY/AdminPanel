@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Restaurants\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Schemas\Schema;
 
@@ -23,7 +23,9 @@ class RestaurantForm
                     ->tel()
                     ->default(null),
                 FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->disk('public')
+                    ->directory('restaurants'),
                 TimePicker::make('open_at')
                     ->required(),
                 TimePicker::make('close_at')

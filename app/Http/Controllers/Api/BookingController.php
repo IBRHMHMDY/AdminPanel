@@ -35,9 +35,15 @@ class BookingController extends Controller
         if ($existingBookingsCount >= $tableType->quantity) {
             return response()->json(['message' => 'عذراً، لا توجد طاولات متاحة في هذا الوقت'], 422);
         }
-
+        // توليد رقم حجز فريد
+        do {
+            // توليد رقم مكون من 8 أرقام (يمكنك تغييره لحروف وأرقام)
+            $bookingNumber = 'BK-'.strtoupper(Str::random(6));
+            // أو رقم فقط: rand(100000, 999999)
+        } while (Booking::where('booking_number', $bookingNumber)->exists());
         // 2. إنشاء الحجز
         $booking = Booking::create([
+            'booking_number' => $bookingNumber,
             'user_id' => auth()->id(), // نأخذه من التوكن تلقائياً
             'restaurant_id' => $request->restaurant_id,
             'table_type_id' => $request->table_type_id,

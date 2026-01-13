@@ -24,6 +24,7 @@ class RestaurantResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
+
         return RestaurantForm::configure($schema);
     }
 
