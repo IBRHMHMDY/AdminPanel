@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
@@ -54,5 +55,28 @@ class UserResource extends Resource
             'view' => ViewUser::route('/{record}'),
             'edit' => EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        // السوبر أدمن يرى الجميع
+        if (auth()->user()->hasRole('Super Admin')) {
+            return $query;
+        }
+
+        return $query->where('restaurant_id', auth()->user()->restaurant_id);
+        // return parent::getEloquentQuery()
+        //     ->whereDoesntHave('roles', function ($query) {
+        //         $query->where('name', 'Super Admin');
+        //     });
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        // القائمة تظهر فقط إذا كان المستخدم "Super Admin"
+        // أو لديه صلاحية رؤية المستخدمين
+        return auth()->user()->hasRole('Super Admin') || auth()->user()->can('view_users');
     }
 }

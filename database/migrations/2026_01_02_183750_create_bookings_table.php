@@ -16,11 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // العميل
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete(); // المطعم
             $table->foreignId('table_type_id')->constrained('table_types')->cascadeOnDelete(); // نوع الطاولة المحجوزة
+            $table->String('booking_number')->unique()->default(null); // رقم الحجز الفريد
             $table->dateTime('booking_date'); // تاريخ ووقت الحجز
             $table->integer('guests_count'); // عدد الضيوف الفعلي
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending'); // حالة الحجز
             $table->timestamps();
         });
+
     }
 
     /**

@@ -20,9 +20,10 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('البريد الإلكتروني')
                     ->searchable(),
-                TextColumn::make('email_verified_at')->label('تاريخ التحقق')
-                    ->dateTime()
-                    ->sortable(),
+                TextColumn::make('roles.name')
+                    ->label('الدور')
+                    ->badge() // يظهر كـ شارة ملونة
+                    ->separator(','),
                 TextColumn::make('created_at')->label('تاريخ الإنشاء')
                     ->dateTime()
                     ->sortable()

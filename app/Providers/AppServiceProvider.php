@@ -2,6 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
+use App\Models\Restaurant;
+use App\Models\Role;
+use App\Models\User;
+use App\Policies\BookingPolicy;
+use App\Policies\RestaurantPolicy;
+use App\Policies\RolePolicy;
+use App\Policies\UserPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Role::class, RolePolicy::class);
+        Gate::policy(Restaurant::class, RestaurantPolicy::class);
+        Gate::policy(Booking::class, BookingPolicy::class);
     }
 }

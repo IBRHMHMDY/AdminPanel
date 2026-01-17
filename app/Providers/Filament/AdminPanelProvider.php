@@ -24,13 +24,18 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
+            ->brandLogo(fn () => view('filament.brand'))
+            ->brandLogoHeight('3rem') // زيادة الارتفاع قليلاً ليناسب السطرين
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
+                'secondary' => Color::Gray,
+                'tertiary' => Color::Slate,
             ])
+            ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

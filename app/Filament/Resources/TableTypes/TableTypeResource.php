@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TableTypeResource extends Resource
 {
@@ -54,5 +55,16 @@ class TableTypeResource extends Resource
             'view' => ViewTableType::route('/{record}'),
             'edit' => EditTableType::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (auth()->user()->hasRole('Super Admin')) {
+            return $query;
+        }
+
+        return $query->where('restaurant_id', auth()->user()->restaurant_id);
     }
 }

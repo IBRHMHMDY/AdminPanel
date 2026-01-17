@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class RestaurantResource extends Resource
 {
@@ -53,5 +54,19 @@ class RestaurantResource extends Resource
             'view' => ViewRestaurant::route('/{record}'),
             'edit' => EditRestaurant::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        // 1. هات الاستعلام الأساسي
+        $query = parent::getEloquentQuery();
+
+        // 2. إذا كان المستخدم هو Super Admin، اعرض كل شيء (اخرج من الدالة)
+        if (auth()->user()->hasRole('Super Admin')) {
+            return $query;
+        }
+
+        // 3. إذا كان مديراً، اعرض فقط المطاعم المرتبطة به
+        return $query->where('user_id', auth()->id());
     }
 }

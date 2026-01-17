@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\TableTypes\Schemas;
 
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -12,11 +11,12 @@ class TableTypeForm
     {
         return $schema
             ->components([
-                Select::make('restaurant_id')
-                    ->relationship('restaurant', 'name') // هذا السطر يجلب أسماء المطاعم تلقائياً
-                    ->required()
+                TextColumn::make('restaurant.name')
+                    ->label('المطعم')
+                    ->sortable()
                     ->searchable()
-                    ->preload(),
+                // يظهر فقط للسوبر أدمن
+                    ->visible(fn () => auth()->user()->hasRole('Super Admin')),
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('capacity')

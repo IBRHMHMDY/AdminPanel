@@ -3,13 +3,38 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Restaurant extends Model
+class Restaurant extends Model implements HasMedia
 {
-    protected $fillable = ['name', 'address', 'phone', 'image', 'open_at', 'close_at'];
+    use InteractsWithMedia;
+
+    protected $fillable = ['name', 'address', 'phone', 'image', 'open_at', 'close_at', 'user_id'];
 
     // أضف هذا السطر لكي يتم إرسال الحقل دائماً مع الـ JSON
     protected $appends = ['is_favorited'];
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(100)
+            ->height(100)
+            ->sharpen(10);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // الموظفين التابعين للمطعم
+    public function employees(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 
     // المطعم يملك أنواع طاولات متعددة
     public function tableTypes()

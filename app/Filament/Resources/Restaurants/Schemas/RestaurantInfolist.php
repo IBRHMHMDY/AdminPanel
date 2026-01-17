@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Restaurants\Schemas;
 
-use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -18,7 +18,9 @@ class RestaurantInfolist
                     ->columnSpanFull(),
                 TextEntry::make('phone')
                     ->placeholder('-'),
-                ImageEntry::make('image')
+                SpatieMediaLibraryImageEntry::make('image')
+                    ->collection('restaurant_images')
+                    ->disk('public')
                     ->placeholder('-'),
                 TextEntry::make('open_at')
                     ->time(),

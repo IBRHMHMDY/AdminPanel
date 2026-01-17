@@ -24,8 +24,10 @@ class BookingForm
                     ->required()
                     ->preload(),
                 Select::make('table_type_id')
-                    ->relationship('tableType', 'name') // هذا السطر يجلب أسماء أنواع الطاولات تلقائياً
-                    ->required(),
+                    ->relationship('tableType', 'name')
+                    ->searchable(['restaurants_id']) // هذا السطر يجلب أسماء أنواع الطاولات تلقائياً
+                    ->required()
+                    ->preload(),
                 DateTimePicker::make('booking_date')
                     ->required(),
                 TextInput::make('guests_count')

@@ -1,3 +1,21 @@
-# AhgzlyOnline_app
-This is App Bookings Restaurants Online Version MVP v1
+# 🖥️ أحجزلي - لوحة التحكم والـ API (Backend)
 
+هذا هو الجزء الخاص بالخادم (Server-side) لتطبيق "أهجزلي"، مبني باستخدام Laravel ليوفر لوحة تحكم إدارية واجهة برمجية (API) لتطبيق الموبايل.
+
+## 🛠️ التقنيات (Tech Stack)
+* **Framework:** Laravel 12
+* **Admin Panel:** [Filament PHP](https://filamentphp.com/) (لإدارة المطاعم والحجوزات).
+* **Authentication:** Laravel Sanctum.
+* **Database:** MySQL / PostgreSQL.
+
+## 🔑 المميزات البرمجية
+* **Middleware مخصص:** (`is_admin`, `is_user`) للتحكم في الصلاحيات.
+* **API Endpoints:** موثقة ومنظمة لعمليات (Auth, Bookings, Restaurants).
+* **Validations:** نظام فحص بيانات صارم لمنع تضارب المواعيد في الحجوزات.
+
+## 🚀 طريقة التشغيل
+1. قم بتحميل المشروع وفتح المجلد:
+   ```bash
+   composer install
+   cp .env.example .env
+   php artisan key:generate
